@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`API Category [DELETE] /category/{id} Not found 1`] = `
+{
+  "error": "Not Found",
+  "message": "Категория не найдена",
+  "statusCode": 404,
+}
+`;
+
+exports[`API Category [GET] /category/{idOrSlug} Not found by id 1`] = `
+{
+  "error": "Not Found",
+  "message": "Категория не найдена",
+  "statusCode": 404,
+}
+`;
+
+exports[`API Category [PATCH] /category/{id} Not found 1`] = `
+{
+  "error": "Not Found",
+  "message": "Категория не найдена",
+  "statusCode": 404,
+}
+`;
+
+exports[`API Category [PATCH] /category/{id} Update one field 1`] = `{}`;
+
+exports[`API Category [POST] /category Id and slug unique test 1`] = `
+{
+  "error": "Bad Request",
+  "message": "Необходимо соблюдать уникальность полей",
+  "statusCode": 400,
+}
+`;
+
+exports[`API Category [POST] /category Unique id test 1`] = `
+{
+  "error": "Bad Request",
+  "message": "Необходимо соблюдать уникальность полей",
+  "statusCode": 400,
+}
+`;
+
+exports[`API Category [POST] /category Unique slug test 1`] = `
+{
+  "error": "Bad Request",
+  "message": "Необходимо соблюдать уникальность полей",
+  "statusCode": 400,
+}
+`;

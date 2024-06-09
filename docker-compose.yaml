@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  custom_app_name:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      - custom_mongo_name
+    environment:
+      - MONGODB_USER=${MONGODB_USER}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - MONGODB_DATABASE=${MONGODB_DATABASE}
+      - MONGODB_HOST=${MONGODB_HOST}
+
+  custom_mongo_name:
+    image: mongo:5.0
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    container_name: my_custom_mongo_container_name
+
+volumes:
+  mongo-data:
