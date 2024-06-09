@@ -1,3 +1,11 @@
+## Тесты
+
+Запросы покрыты тестами,запуск тестов
+
+```bash
+$ yarn test
+```
+
 ## Запустить в Docker
 
 ```bash
@@ -18,13 +26,4 @@ $ yarn start
 
 # watch mode
 $ yarn start:dev
-```
-
-## Тесты
-
-Запросы покрыты тестами,запуск тестов
-
-```bash
-# unit tests
-$ yarn test
 ```

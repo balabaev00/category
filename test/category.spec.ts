@@ -16,10 +16,6 @@ beforeEach(async () => {
     await ctx.clearDatabase();
 });
 
-afterEach(async () => {
-    await ctx.clearDatabase();
-});
-
 describe('API Category', () => {
     describe('[POST] /category', () => {
         const baseCategoryDto: CreateCategoryDto = {
