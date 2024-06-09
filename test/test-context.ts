@@ -16,7 +16,8 @@ export class TestContext {
 
     private _inMemoryMongo?: MongoMemoryServer;
 
-    get request(): TestAgent<request.SuperTestStatic.Test> {
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    get request() {
         return request(this.app.getHttpServer());
     }
 
