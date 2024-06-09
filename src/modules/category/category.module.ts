@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { CategoryService } from './services/category.service';
-import { CategoryController } from './controllers/category.controller';
-import { CategoryRepository } from './repositories/category.repository';
 import { MongooseModule } from '@nestjs/mongoose';
+
+import { CategoryController } from './controllers/category.controller';
 import { CategoryEntity } from './entities/category.entity';
+import { CategoryRepository } from './repositories/category.repository';
+import { CategoryService } from './services/category.service';
 
 @Module({
   imports: [

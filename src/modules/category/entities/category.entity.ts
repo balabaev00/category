@@ -26,7 +26,7 @@ export type CategoryDocument = HydratedDocument<Category>;
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
 
-CategorySchema.clearIndexes()
+CategorySchema.clearIndexes();
 CategorySchema.index({ slug: 1 }, { unique: true });
 CategorySchema.index({ id: 1 }, { unique: true });
 

@@ -1,8 +1,8 @@
 // category-filter.dto.ts
 
-import { Expose, Transform, Type } from 'class-transformer';
-import { IsIn, IsOptional, IsString, IsInt, Min, IsBoolean } from 'class-validator';
-import { ApiProperty, ApiQuery } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
+import { Expose, Transform } from 'class-transformer';
+import { IsIn, IsInt, IsOptional, IsString, Min } from 'class-validator';
 import { EmptyStringToUndefined } from 'src/common/decorators/empty-string-to-undefined';
 
 export class CategoryFilterDto {
@@ -20,8 +20,12 @@ export class CategoryFilterDto {
 
     @Transform(({ obj }) => {
         const { active } = obj;
-        if (active === '0' || active === 'false') return false;
-        if (active === '1' || active === 'true') return true;
+        if (active === '0' || active === 'false') {
+            return false;
+        }
+        if (active === '1' || active === 'true') {
+            return true;
+        }
         return Boolean(active);
     })
     @IsOptional()

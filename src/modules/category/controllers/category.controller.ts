@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, Query, HttpStatus } from '@nestjs/common';
-import { CategoryService } from '../services/category.service';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { BadRequestExceptionDto, NotFoundExceptionDto } from 'src/common/dto';
+
+import { CategoryDto, CategoryFilterDto } from '../dto';
 import { CreateCategoryDto } from '../dto/create-category.dto';
 import { UpdateCategoryDto } from '../dto/update-category.dto';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { CategoryDto, CategoryFilterDto } from '../dto';
-import { BadRequestExceptionDto, NotFoundExceptionDto } from 'src/common/dto';
+import { CategoryService } from '../services/category.service';
 
 @ApiTags('Категории')
 @Controller('category')
@@ -19,14 +20,14 @@ export class CategoryController {
   }
 
   @Get()
-  find(@Query() query: CategoryFilterDto) {
+  find(@Query() query: CategoryFilterDto): Promise<CategoryDto[]> {
     return this.categoryService.find(query);
   }
 
   @Get(':idOrSlug')
   @ApiOkResponse({ type: CategoryDto })
   @ApiNotFoundResponse({ type: NotFoundExceptionDto })
-  findOne(@Param('idOrSlug') idOrSlug: string) {
+  findOne(@Param('idOrSlug') idOrSlug: string): Promise<CategoryDto> {
     return this.categoryService.findOneByIdOrSlug(idOrSlug);
   }
 
@@ -34,7 +35,7 @@ export class CategoryController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiBadRequestResponse({ type: BadRequestExceptionDto })
   @ApiNotFoundResponse({ type: NotFoundExceptionDto })
-  update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+  update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto): Promise<void> {
     return this.categoryService.update(id, updateCategoryDto);
   }
 
@@ -42,7 +43,7 @@ export class CategoryController {
   @HttpCode(204)
   @ApiNoContentResponse()
   @ApiNotFoundResponse({ type: NotFoundExceptionDto })
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: string): Promise<void> {
     return this.categoryService.delete(id);
   }
 }

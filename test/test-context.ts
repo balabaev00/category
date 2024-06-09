@@ -8,7 +8,6 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import { Model } from 'mongoose';
 import { validatorConfig } from 'src/configs/validator.config';
 import { AppModule } from 'src/modules/app.module';
-
 import * as request from 'supertest';
 
 export class TestContext {
@@ -17,7 +16,7 @@ export class TestContext {
 
     private _inMemoryMongo?: MongoMemoryServer;
 
-    get request() {
+    get request(): TestAgent<request.SuperTestStatic.Test> {
         return request(this.app.getHttpServer());
     }
 

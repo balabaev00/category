@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
-import { Category, CategoryDocument } from '../entities/category.entity';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+
 import { CategoryFilterDto, CreateCategoryDto, UpdateCategoryDto } from '../dto';
+import { Category, CategoryDocument } from '../entities/category.entity';
 
 @Injectable()
 export class CategoryRepository {
@@ -15,15 +16,17 @@ export class CategoryRepository {
         return this.categoryModel.create(dto);
     }
 
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     update(id: string, dto: UpdateCategoryDto) {
         return this.categoryModel.updateOne({ id }, dto, { upsert: false });
     }
 
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     delete(id: string) {
-        return this.categoryModel.deleteOne({ id })
+        return this.categoryModel.deleteOne({ id });
     }
 
-    async findOneByIdOrSlug(idOrSlug: string) {
+    async findOneByIdOrSlug(idOrSlug: string): Promise<CategoryDocument | null> {
         let category = await this.categoryModel.findOne({ id: idOrSlug });
 
         if (!category) {
@@ -33,18 +36,25 @@ export class CategoryRepository {
         return category;
     }
 
-    async find(filterDto: CategoryFilterDto): Promise<CategoryDocument[]> {
+    find(filterDto: CategoryFilterDto): Promise<CategoryDocument[]> {
         const { name, description, active, search, pageSize, page, sort } = filterDto;
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let filter: any = {};
-        if (name) filter['name'] = { $regex: this.prepareStringToSearch(name), $options: 'i' };
+        if (name) {
+            filter['name'] = { $regex: this.prepareStringToSearch(name), $options: 'i' };
+        }
 
-        if (description) filter['description'] = {
-            $regex: this.prepareStringToSearch(description),
-            $options: 'i'
-        };
+        if (description) {
+            filter['description'] = {
+                $regex: this.prepareStringToSearch(description),
+                $options: 'i',
+            };
+        }
 
-        if (active !== undefined) filter['active'] = active;
+        if (active !== undefined) {
+            filter['active'] = active;
+        }
         if (search) {
             const preparedSearch = this.prepareStringToSearch(search);
 
@@ -53,7 +63,7 @@ export class CategoryRepository {
                     { 'name': { $regex: preparedSearch, $options: 'i' } },
                     { 'description': { $regex: preparedSearch, $options: 'i' } },
                 ],
-            }
+            };
         }
 
         return this.categoryModel
