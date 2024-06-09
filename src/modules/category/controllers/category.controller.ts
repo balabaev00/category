@@ -20,6 +20,8 @@ export class CategoryController {
   }
 
   @Get()
+  @ApiOkResponse({ type: CategoryDto })
+  @ApiBadRequestResponse({ type: BadRequestExceptionDto })
   find(@Query() query: CategoryFilterDto): Promise<CategoryDto[]> {
     return this.categoryService.find(query);
   }
